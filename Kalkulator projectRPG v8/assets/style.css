@@ -1,0 +1,6 @@
+body {
+    background-color: #1A171A; /* Kolor tła (zmień na pożądany kolor) */
+    background-image: url('zd.png'); /* Ścieżka do obrazka tła */
+    background-size: cover; /* Dopasowanie obrazka tła do rozmiaru ekranu */
+    background-repeat: no-repeat; /* Wyłączenie powtarzania obrazka tła */
+}

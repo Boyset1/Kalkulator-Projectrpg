@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Wybór pojazdu i tuning</title>
+    <link rel="stylesheet" type="text/css" href="assets/style.css">
+    <style>
+        .button {
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Wybór pojazdu i tuning</h1>
+
+    <h2>Wybierz typ pojazdu:</h2>
+    <button class="button" onclick="showVehicles('Cygan Angel Pine')">Cygan Angel Pine</button>
+    <button class="button" onclick="showVehicles('Salon Doherty')">Salon Doherty</button>
+    <button class="button" onclick="showVehicles('Salon Downtown')">Salon Downtown</button>
+    <button class="button" onclick="showVehicles('Salon Exclusive')">Salon Exclusive</button>
+    <button class="button" onclick="showVehicles('Salon terenowy')">Salon terenowy</button>
+    <button class="button" onclick="showVehicles('Salon z pojazdami dostawczymi')">Salon z pojazdami dostawczymi</button>
+    <button class="button" onclick="showVehicles('Salon Lowriderów')">Salon Lowriderów</button>
+
+    <h2 id="selectedVehicle"></h2>
+
+    <h2 id="selectedTuning"></h2>
+
+    <h2>Wybierz opcje Inne:</h2>
+    <label><input type="checkbox" id="checkboxRadio"> Radio</label>
+    <label><input type="checkbox" id="checkboxCBRadio"> CB-radio</label>
+    <label><input type="checkbox" id="checkboxOgranicznik"> Ogranicznik</label>
+    <label><input type="checkbox" id="checkboxFotoradary"> Wykrywacz fotoradarów</label>
+    <label><input type="checkbox" id="checkboxABS"> System ABS</label>
+    <label><input type="checkbox" id="checkboxGwintowane"> Gwintowane zawieszenie</label>
+    <label><input type="checkbox" id="checkboxHydraulika"> Hydraulika</label>
+
+    <script>
+        var selectedVehicle = '';
+        var selectedVehiclePrice = 0;
+        var selectedECU = '';
+        var selectedECUPrice = 0;
+        var selectedTurbo = '';
+        var selectedTurboPrice = 0;
+        var selectedLPG = '';
+        var selectedLPGPrice = 0;
+        var selectedZestaw = '';
+        var selectedZestawPrice = 0;
+        var selectedCFI = '';
+        var selectedCFIPrice = 0;
+        var selectedNaped = '';
+        var selectedNapedPrice = 0;
+        var selectedBakPaliwa = '';
+        var selectedBakPaliwaPrice = 0;
+
+        function showVehicles(vehicleType) {
+            selectedVehicle = vehicleType;
+            selectedVehiclePrice = 0;
+            selectedECU = '';
+            selectedECUPrice = 0;
+            selectedTurbo = '';
+            selectedTurboPrice = 0;
+            selectedLPG = '';
+            selectedLPGPrice = 0;
+            selectedZestaw = '';
+            selectedZestawPrice = 0;
+            selectedCFI = '';
+            selectedCFIPrice = 0;
+            selectedNaped = '';
+            selectedNapedPrice = 0;
+            selectedBakPaliwa = '';
+            selectedBakPaliwaPrice = 0;
+
+            var vehicles = {
+                'Cygan Angel Pine': {
+                    'Bobcat': 33000,
+                    'Bravura': 21000,
+                    'Clover': 17000,
+                    'Clover Wagon': 17000,
+                    'Manana': 5000,
+                    'Moonbeam': 6700,
+                    'Perennial': 5500,
+                    'Picador': 15500,
+                    'Previon': 9500,
+                    'Sadler': 18000,
+                    'Tampa': 24000,
+                    'Walton': 3500
+                },
+                'Salon Doherty': {
+                    'Admiral' : 46000,
+                    'Admiral Kombi' : 42000,
+                    'Blista Compact' : 76000,
+                    'Buccaneer' : 33000, 
+                    'Cadrona': 30000, 
+                    'Club' : 76000 ,
+                    'Elegant' : 38000,
+                    'Emperor' : 30000,
+                    'Euros' : 65000,
+                    'Feltzer' : 100000,
+                    'Fortune' :	38000,
+                    'Fortune 240SX'	: 110000,
+                    'Glendale' : 35000,
+                    'Greenwood' : 18000,
+                    'Majestic' : 34000,
+                    'Manana DTM' : 88000,
+                    'Merit' : 70000,
+                    'Nebula' : 38000,
+                    'Premier' : 63000,
+                    'Primo' : 26000,
+                    'Primo Kombi' : 26000,
+                    'Sabre' : 58000,
+                    'Schafter' : 125000,
+                    'Schafter kombi' : 125000,
+                    'Sentinel' : 65000,
+                    'Sentinel Kombi' : 65000,
+                    'Solair' : 39000,
+                    'Stallion' : 75000,
+                    'Stallion GTT' : 93000,
+                    'Stratum' : 55000,
+                    'Sunrise' : 20000,
+                    'Tahoma' : 60000,
+                    'Vincent' : 28000,
+                    'Vincent Kombi' : 28000,
+                    'Virgo' : 41000,
+                    'Washington' : 47000,
+                    'Windsor' : 120000,
+                },
+                'Salon Downtown': {
+                    'Alpha' : 110000,
+                    'Banshee' : 560000,
+                    'Buffalo' : 260000,
+                    'Bullet' : 740000,
+                    'Camper' : 140000,
+                    'Cheetah': 550000,
+                    'Comet' : 370000, 
+                    'Elegy' : 270000, 
+                    'Flash' : 118000, 
+                    'Infernus' : 1700000, 
+                    'Jester' : 180000, 
+                    'Phoenix' : 120000, 
+                    'Rancher Long' : 1340000, 
+                    'Sultan' : 350000, 
+                    'Sultan Kombi' : 50000, 
+                    'Super GT' : 185000, 
+                    'Turismo' : 1620000,
+                    'Uranus' : 70000, 
+                    'ZR-350' : 280000, 
+                },
+                'Salon Exclusive': {
+                    'Banshee Viper GTS' : 830000, 
+                    'Bullet GT' : 1100000,
+                    'Cheetah 76' : 730000, 
+                    'DeLuxo' : 1000000, 
+                    'Feroci' : 970000, 
+                    'Infernus Kakimoto' : 2270000, 
+                    'Infernus NSX' : 1970000, 
+                    'Infernus Pandem' : 2500000,
+                    'Monroe' : 780000, 
+                    'Turismo Competizione' : 2100000, 
+                },
+                'Salon terenowy': {
+                    'BF Injection' : 78000, 
+                    'Contander'	 : 70000, 
+                    'Huntley' : 132500, 
+                    'Landstalker' : 56000, 
+                    'Mesa' : 45000, 
+                    'Mesa Rubicon' : 65000, 
+                    'Patriot' : 750000, 
+                    'Rancher' : 55000, 
+                    'Sandking' : 240000, 
+                    'Yosemite' : 85000, 
+                },
+                'Salon z pojazdami dostawczymi': {
+                    'Benson' : 40000, 
+                    'Boxville' : 52000,
+                    'Burrito' : 55000, 
+                    'Mule' : 100000, 
+                    'Securicar' : 270000, 
+                    'Yankee' : 178000, 
+                },
+                'Salon Lowriderów': {
+                    'Blade' : 200000, 
+                    'Broadway' : 185000, 
+                    'Remington' : 170000, 
+                    'Savanna' : 220000, 
+                    'Slamvan' : 80000, 
+                    'Tornado' : 60000, 
+                    'Voodoo' : 150000,
+                }
+        };
+
+        var vehicleButtons = '';
+
+        for (var vehicle in vehicles[vehicleType]) {
+            var price = vehicles[vehicleType][vehicle];
+            vehicleButtons += '<button class="button" onclick="selectVehicle(\'' + vehicle + '\', ' + price + ')">' + vehicle + '</button>';
+        }
+
+        document.getElementById('selectedVehicle').innerHTML = 'Wybrany typ pojazdu: ' + vehicleType;
+        document.getElementById('selectedTuning').innerHTML = '';
+
+        if (vehicleButtons === '') {
+            document.getElementById('selectedVehicle').innerHTML += '<br><br>Brak dostępnych pojazdów.';
+        } else {
+            document.getElementById('selectedVehicle').innerHTML += '<br><br>Wybierz pojazd:<br>' + vehicleButtons;
+        }
+    }
+
+    function selectVehicle(vehicle, price) {
+        selectedVehicle = vehicle;
+        selectedVehiclePrice = price;
+        selectedECU = '';
+        selectedECUPrice = 0;
+        selectedTurbo = '';
+        selectedTurboPrice = 0;
+        selectedLPG = '';
+        selectedLPGPrice = 0;
+        selectedZestaw = '';
+        selectedZestawPrice = 0;
+        selectedCFI = '';
+        selectedCFIPrice = 0;
+        selectedNaped = '';
+        selectedNapedPrice = 0;
+        selectedBakPaliwa = '';
+        selectedBakPaliwaPrice = 0;
+
+        document.getElementById('selectedTuning').innerHTML = 'Wybrany pojazd: ' + vehicle + ', cena: $' + price;
+
+        var ecuPrices = {
+            'V1': 10500,
+            'V2': 18000,
+            'V3': 30000,
+            'V4': 40000,
+            'Nic' : 0
+        };
+
+        var ecuButtons = '';
+
+        for (var ecu in ecuPrices) {
+            ecuButtons += '<button class="button" onclick="selectECU(\'' + ecu + '\', ' + ecuPrices[ecu] + ')">' + ecu + '</button>';
+        }
+
+        document.getElementById('selectedTuning').innerHTML += '<br><br>Wybierz ECU:<br>' + ecuButtons;
+    }
+
+    function selectECU(ecu, ecuPrice) {
+        selectedECU = ecu;
+        selectedECUPrice = ecuPrice;
+
+        var turboPrices = {
+            'V1': 15000,
+            'V2': 25000,
+            'V3': 40000,
+            'V4': 50000,
+            'V5': 60000,
+            'Nic' : 0
+ 
+        };
+
+        var turboButtons = '';
+
+        for (var turbo in turboPrices) {
+            turboButtons += '<button class="button" onclick="selectTurbo(\'' + turbo + '\', ' + turboPrices[turbo] + ')">' + turbo + '</button>';
+        }
+
+        document.getElementById('selectedTuning').innerHTML = 'Wybrany pojazd: ' + selectedVehicle + ', cena: $' + selectedVehiclePrice;
+        document.getElementById('selectedTuning').innerHTML += '<br>Wybrany ECU: ' + selectedECU + ', cena: $' + selectedECUPrice;
+        document.getElementById('selectedTuning').innerHTML += '<br><br>Wybierz Turbo:<br>' + turboButtons;
+    }
+
+    function selectTurbo(turbo, turboPrice) {
+        selectedTurbo = turbo;
+        selectedTurboPrice = turboPrice;
+
+        var lpgPrices = {
+            '25L': 20000,
+            '50L': 25000,
+            '75L': 35000,
+            'Nic' : 0
+        };
+
+        var lpgButtons = '';
+
+        for (var lpg in lpgPrices) {
+            lpgButtons += '<button class="button" onclick="selectLPG(\'' + lpg + '\', ' + lpgPrices[lpg] + ')">' + lpg + '</button>';
+        }
+
+        document.getElementById('selectedTuning').innerHTML = 'Wybrany pojazd: ' + selectedVehicle + ', cena: $' + selectedVehiclePrice;
+        document.getElementById('selectedTuning').innerHTML += '<br>Wybrany ECU: ' + selectedECU + ', cena: $' + selectedECUPrice;
+        document.getElementById('selectedTuning').innerHTML += '<br>Wybrane Turbo: ' + selectedTurbo + ', cena: $' + selectedTurboPrice;
+        document.getElementById('selectedTuning').innerHTML += '<br><br>Wybierz LPG:<br>' + lpgButtons;
+    }
+
+    function selectLPG(lpg, lpgPrice) {
+        selectedLPG = lpg;
+        selectedLPGPrice = lpgPrice;
+
+            var zestawPrices = {
+                'Uliczny': 50000,
+                'Wyścigowy': 100000,
+                'Drifterski': 150000,
+                'Torowy': 250000,
+                'Nic' : 0
+            };
+
+            var zestawButtons = '';
+
+            for (var zestaw in zestawPrices) {
+                zestawButtons += '<button class="button" onclick="selectZestaw(\'' + zestaw + '\', ' + zestawPrices[zestaw] + ')">' + zestaw + '</button>';
+            }
+
+            document.getElementById('selectedTuning').innerHTML = 'Wybrany pojazd: ' + selectedVehicle + ', cena: $' + selectedVehiclePrice;
+            document.getElementById('selectedTuning').innerHTML += '<br>Wybrany ECU: ' + selectedECU + ', cena: $' + selectedECUPrice;
+            document.getElementById('selectedTuning').innerHTML += '<br>Wybrane Turbo: ' + selectedTurbo + ', cena: $' + selectedTurboPrice;
+            document.getElementById('selectedTuning').innerHTML += '<br>Wybrane LPG: ' + selectedLPG + ', cena: $' + selectedLPGPrice;
+            document.getElementById('selectedTuning').innerHTML += '<br><br>Wybierz Zestaw:<br>' + zestawButtons;
+        }
+
+        function selectZestaw(zestaw, zestawPrice) {
+            selectedZestaw = zestaw;
+            selectedZestawPrice = zestawPrice;
+
+            var cfiPrices = {
+                'V1': 125000,
+                'V2': 150000,
+                'V3': 175000,
+                'V4': 225000,
+                'V5': 250000,
+                'Nic' : 0
+            };
+
+            var cfiButtons = '';
+
+            for (var cfi in cfiPrices) {
+                cfiButtons += '<button class="button" onclick="selectCFI(\'' + cfi + '\', ' + cfiPrices[cfi] + ')">' + cfi + '</button>';
+            }
+
+            document.getElementById('selectedTuning').innerHTML = 'Wybrany pojazd: ' + selectedVehicle + ', cena: $' + selectedVehiclePrice;
+            document.getElementById('selectedTuning').innerHTML += '<br>Wybrany ECU: ' + selectedECU + ', cena: $' + selectedECUPrice;
+            document.getElementById('selectedTuning').innerHTML += '<br>Wybrane Turbo: ' + selectedTurbo + ', cena: $' + selectedTurboPrice;
+            document.getElementById('selectedTuning').innerHTML += '<br>Wybrane LPG: ' + selectedLPG + ', cena: $' + selectedLPGPrice;
+            document.getElementById('selectedTuning').innerHTML += '<br>Wybrany Zestaw: ' + selectedZestaw + ', cena: $' + selectedZestawPrice;
+            document.getElementById('selectedTuning').innerHTML += '<br><br>Wybierz C.F.I.:<br>' + cfiButtons;
+        }
+
+        function selectCFI(cfi, cfiPrice) {
+            selectedCFI = cfi;
+            selectedCFIPrice = cfiPrice;
+
+            var napedPrices = {
+                'RWD': 30000,
+                'AWD': 50000,
+                'FWD': 20000,
+                'MZN': 75000,
+                'Nic' : 0
+        };
+
+        var napedButtons = '';
+
+        for (var naped in napedPrices) {
+            napedButtons += '<button class="button" onclick="selectNaped(\'' + naped + '\', ' + napedPrices[naped] + ')">' + naped + '</button>';
+        }
+
+        document.getElementById('selectedTuning').innerHTML = 'Wybrany pojazd: ' + selectedVehicle + ', cena: $' + selectedVehiclePrice;
+        document.getElementById('selectedTuning').innerHTML += '<br>Wybrany ECU: ' + selectedECU + ', cena: $' + selectedECUPrice;
+        document.getElementById('selectedTuning').innerHTML += '<br>Wybrane Turbo: ' + selectedTurbo + ', cena: $' + selectedTurboPrice;
+        document.getElementById('selectedTuning').innerHTML += '<br>Wybrane LPG: ' + selectedLPG + ', cena: $' + selectedLPGPrice;
+        document.getElementById('selectedTuning').innerHTML += '<br>Wybrany Zestaw: ' + selectedZestaw + ', cena: $' + selectedZestawPrice;
+        document.getElementById('selectedTuning').innerHTML += '<br><br>Wybierz Zmianę napędu:<br>' + napedButtons;
+    }
+
+    function selectNaped(naped, napedPrice) {
+        selectedNaped = naped;
+        selectedNapedPrice = napedPrice;
+
+        var bakPaliwaPrices = {
+            '100L': 45000,
+            '125L': 55000,
+            '150L': 65000,
+            'Nic' : 0
+        };
+
+        var bakPaliwaButtons = '';
+
+        for (var bak in bakPaliwaPrices) {
+            bakPaliwaButtons += '<button class="button" onclick="selectBakPaliwa(\'' + bak + '\', ' + bakPaliwaPrices[bak] + ')">' + bak + '</button>';
+        }
+
+        document.getElementById('selectedTuning').innerHTML = 'Wybrany pojazd: ' + selectedVehicle + ', cena: $' + selectedVehiclePrice;
+        document.getElementById('selectedTuning').innerHTML += '<br>Wybrany ECU: ' + selectedECU + ', cena: $' + selectedECUPrice;
+        document.getElementById('selectedTuning').innerHTML += '<br>Wybrane Turbo: ' + selectedTurbo + ', cena: $' + selectedTurboPrice;
+        document.getElementById('selectedTuning').innerHTML += '<br>Wybrane LPG: ' + selectedLPG + ', cena: $' + selectedLPGPrice;
+        document.getElementById('selectedTuning').innerHTML += '<br>Wybrany Zestaw: ' + selectedZestaw + ', cena: $' + selectedZestawPrice;
+        document.getElementById('selectedTuning').innerHTML += '<br>Wybrane C.F.I.: ' + selectedCFI + ', cena: $' + selectedCFIPrice;
+        document.getElementById('selectedTuning').innerHTML += '<br><br>Wybierz Bak paliwa:<br>' + bakPaliwaButtons;
+    }
+
+        function selectBakPaliwa(bak, bakPrice) {
+            selectedBakPaliwa = bak;
+            selectedBakPaliwaPrice = bakPrice;
+
+            var totalPrice = selectedVehiclePrice + selectedECUPrice + selectedTurboPrice + selectedLPGPrice + selectedZestawPrice + selectedCFIPrice + selectedNapedPrice + selectedBakPaliwaPrice;
+
+            document.getElementById('selectedTuning').innerHTML = 'Wybrany pojazd: ' + selectedVehicle + ', cena: $' + selectedVehiclePrice;
+            document.getElementById('selectedTuning').innerHTML += '<br>Wybrany ECU: ' + selectedECU + ', cena: $' + selectedECUPrice;
+            document.getElementById('selectedTuning').innerHTML += '<br>Wybrane Turbo: ' + selectedTurbo + ', cena: $' + selectedTurboPrice;
+            document.getElementById('selectedTuning').innerHTML += '<br>Wybrane LPG: ' + selectedLPG + ', cena: $' + selectedLPGPrice;
+            document.getElementById('selectedTuning').innerHTML += '<br>Wybrany Zestaw: ' + selectedZestaw + ', cena: $' + selectedZestawPrice;
+            document.getElementById('selectedTuning').innerHTML += '<br>Wybrane C.F.I.: ' + selectedCFI + ', cena: $' + selectedCFIPrice;
+            document.getElementById('selectedTuning').innerHTML += '<br>Wybrana Zmiana napędu: ' + selectedNaped + ', cena: $' + selectedNapedPrice;
+            document.getElementById('selectedTuning').innerHTML += '<br>Wybrany Bak paliwa: ' + selectedBakPaliwa + ', cena: $' + selectedBakPaliwaPrice;
+            document.getElementById('selectedTuning').innerHTML += '<br><br>Suma dodawania: $' + totalPrice;
+        }
+        var selectedOptions = [];
+
+function updateTotalPrice() {
+    var totalPrice = selectedVehiclePrice + selectedECUPrice + selectedTurboPrice + selectedLPGPrice + selectedZestawPrice + selectedCFIPrice + selectedNapedPrice + selectedBakPaliwaPrice;
+
+    for (var option of selectedOptions) {
+        totalPrice += option.price;
+    }
+
+    document.getElementById('selectedTuning').innerHTML = 'Wybrany pojazd: ' + selectedVehicle + ', cena: $' + selectedVehiclePrice;
+    document.getElementById('selectedTuning').innerHTML += '<br>Wybrany ECU: ' + selectedECU + ', cena: $' + selectedECUPrice;
+    document.getElementById('selectedTuning').innerHTML += '<br>Wybrane Turbo: ' + selectedTurbo + ', cena: $' + selectedTurboPrice;
+    document.getElementById('selectedTuning').innerHTML += '<br>Wybrane LPG: ' + selectedLPG + ', cena: $' + selectedLPGPrice;
+    document.getElementById('selectedTuning').innerHTML += '<br>Wybrany Zestaw: ' + selectedZestaw + ', cena: $' + selectedZestawPrice;
+    document.getElementById('selectedTuning').innerHTML += '<br>Wybrane C.F.I.: ' + selectedCFI + ', cena: $' + selectedCFIPrice;
+    document.getElementById('selectedTuning').innerHTML += '<br>Wybrana Zmiana napędu: ' + selectedNaped + ', cena: $' + selectedNapedPrice;
+    document.getElementById('selectedTuning').innerHTML += '<br>Wybrany Bak paliwa: ' + selectedBakPaliwa + ', cena: $' + selectedBakPaliwaPrice;
+
+    for (var option of selectedOptions) {
+        document.getElementById('selectedTuning').innerHTML += '<br>' + option.name + ': $' + option.price;
+    }
+
+    document.getElementById('selectedTuning').innerHTML += '<br><br>Suma dodawania: $' + totalPrice;
+}
+
+function selectOption(optionName, optionPrice) {
+    selectedOptions.push({ name: optionName, price: optionPrice });
+    updateTotalPrice();
+}
+
+function deselectOption(optionName, optionPrice) {
+    selectedOptions = selectedOptions.filter(function (option) {
+        return option.name !== optionName;
+    });
+    updateTotalPrice();
+}
+
+document.getElementById('checkboxRadio').addEventListener('change', function () {
+    if (this.checked) {
+        selectOption('Radio', 500);
+    } else {
+        deselectOption('Radio', 500);
+    }
+});
+
+document.getElementById('checkboxCBRadio').addEventListener('change', function () {
+    if (this.checked) {
+        selectOption('CB-radio', 1500);
+    } else {
+        deselectOption('CB-radio', 1500);
+    }
+});
+
+document.getElementById('checkboxOgranicznik').addEventListener('change', function () {
+    if (this.checked) {
+        selectOption('Ogranicznik', 2000);
+    } else {
+        deselectOption('Ogranicznik', 2000);
+    }
+});
+
+document.getElementById('checkboxFotoradary').addEventListener('change', function () {
+    if (this.checked) {
+        selectOption('Wykrywacz fotoradarów', 2500);
+    } else {
+        deselectOption('Wykrywacz fotoradarów', 2500);
+    }
+});
+
+document.getElementById('checkboxABS').addEventListener('change', function () {
+    if (this.checked) {
+        selectOption('System ABS', 15000);
+    } else {
+        deselectOption('System ABS', 15000);
+    }
+});
+
+document.getElementById('checkboxGwintowane').addEventListener('change', function () {
+    if (this.checked) {
+        selectOption('Gwintowane zawieszenie', 32500);
+        document.getElementById('checkboxHydraulika').disabled = true;
+        document.getElementById('checkboxHydraulika').checked = false;
+    } else {
+        deselectOption('Gwintowane zawieszenie', 32500);
+        document.getElementById('checkboxHydraulika').disabled = false;
+    }
+    updateTotalPrice();
+});
+
+document.getElementById('checkboxHydraulika').addEventListener('change', function () {
+    if (this.checked) {
+        selectOption('Hydraulika', 45000);
+        document.getElementById('checkboxGwintowane').disabled = true;
+        document.getElementById('checkboxGwintowane').checked = false;
+    } else {
+        deselectOption('Hydraulika', 45000);
+        document.getElementById('checkboxGwintowane').disabled = false;
+    }
+    updateTotalPrice();
+});
+
+        
+    </script>
+</body>
+</html>
